@@ -1,0 +1,421 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>12-Week Powerlifting Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700&display=swap">
+<style>
+  /* Layout: header panel with starting PRs, month tabs, then a grid of numbered training-day cards. Black & white, dark by default. */
+  :root {
+    --bg: #fafafa;
+    --panel: #ededed;
+    --row: #e9e9e9;
+    --line: #c5c5c5;
+    --fg: #0a0a0a;
+    --muted: #5c5c5c;
+    --dim: #949494;
+    --shadow: #0a0a0a;
+    --glow: #e6e6e6;
+    --display: "Anton", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    --body: "Inter", Arial, Helvetica, sans-serif;
+    color-scheme: light;
+  }
+  :root.dark {
+    --bg: #050505;
+    --panel: #121212;
+    --row: #161616;
+    --line: #3a3a3a;
+    --fg: #f5f5f5;
+    --muted: #a3a3a3;
+    --dim: #6b6b6b;
+    --shadow: #f5f5f5;
+    --glow: #1c1c1c;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: radial-gradient(ellipse 70% 40% at 50% 0%, var(--glow) 0%, transparent 70%), var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 15px;
+    min-height: 100vh;
+  }
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding-block: 40px 40px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: grid;
+    gap: 32px;
+  }
+  .label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  h1, h2, h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; margin: 0; letter-spacing: 0.02em; line-height: 0.95; text-wrap: balance; }
+
+  /* Header */
+  .hero {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: 6px 6px 0 var(--shadow);
+    padding: clamp(18px, 3vw, 36px);
+    display: grid;
+    gap: 22px;
+  }
+  .hero-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  h1 { font-size: clamp(36px, 6vw + 14px, 84px); }
+  .sub { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+  .prs { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); }
+  .pr { padding: 14px 16px; display: grid; gap: 6px; min-width: 0; }
+  .pr + .pr { border-left: 1px solid var(--line); }
+  .pr .label { color: var(--muted); }
+  .pr strong { font-family: var(--display); font-weight: 400; font-size: clamp(28px, 4vw + 10px, 48px); line-height: 1; font-variant-numeric: tabular-nums; }
+  .pr strong small { font-family: var(--body); font-size: 12px; font-weight: 700; color: var(--muted); margin-left: 4px; letter-spacing: 0.1em; }
+
+  .theme-toggle, .reset {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--bg); color: var(--fg);
+    border: 1px solid var(--fg);
+    box-shadow: 3px 3px 0 var(--shadow);
+    padding: 7px 10px;
+    font-family: var(--body);
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .theme-toggle svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+  .theme-toggle:active, .reset:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+  button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+  /* Month tabs */
+  .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .tab {
+    text-align: left;
+    background: var(--row); color: var(--fg);
+    border: 1px solid var(--line);
+    box-shadow: 4px 4px 0 var(--line);
+    padding: 12px 14px;
+    display: grid; gap: 6px;
+    cursor: pointer;
+    font-family: var(--body);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .tab .label { color: var(--muted); }
+  .tab b { font-family: var(--display); font-weight: 400; font-size: clamp(20px, 2vw + 12px, 30px); text-transform: uppercase; line-height: 1; letter-spacing: 0.02em; }
+  .tab[aria-selected="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); box-shadow: 4px 4px 0 var(--shadow); transform: translate(-2px, -2px); }
+  .tab[aria-selected="true"] .label { color: var(--dim); }
+
+  .month-head { display: flex; justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+  .month-head h2 { font-size: clamp(30px, 4vw + 12px, 52px); }
+  .month-head p { margin: 6px 0 0; color: var(--muted); }
+
+  /* Day cards */
+  .days { display: grid; gap: 22px; }
+  .day {
+    background: var(--row);
+    border: 1px solid var(--line);
+    box-shadow: 4px 4px 0 var(--shadow);
+    display: grid;
+    align-content: start;
+  }
+  .day-head { display: grid; grid-template-columns: 48px 1fr; align-items: stretch; border-bottom: 1px solid var(--line); }
+  .day-num { display: grid; place-items: center; border-right: 1px solid var(--line); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .day-title { padding: 14px 16px; display: grid; gap: 6px; min-width: 0; }
+  .day-title h3 { font-size: clamp(22px, 1.5vw + 14px, 30px); }
+  .day-title .label { color: var(--muted); }
+
+  .ex-list { list-style: none; margin: 0; padding: 0; }
+  .ex-list li + li { border-top: 1px solid var(--line); }
+  .ex {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px 12px;
+    align-items: start;
+    padding: 12px 16px;
+  }
+  .name-wrap { min-width: 0; display: grid; gap: 3px; }
+  .name { font-weight: 500; overflow-wrap: anywhere; }
+  .note { font-size: 12px; color: var(--muted); }
+  .scheme { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  .scheme.text { white-space: normal; font-weight: 500; color: var(--muted); max-width: 18ch; }
+  .load { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { border: 1px solid var(--fg); padding: 2px 7px; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .chip.pct { border-color: var(--line); color: var(--muted); font-weight: 500; }
+
+  /* Week callouts */
+  .callout {
+    border: 1px solid var(--fg);
+    background: var(--panel);
+    box-shadow: 4px 4px 0 var(--shadow);
+    padding: 18px 20px;
+    display: grid;
+    gap: 10px;
+    align-content: start;
+  }
+  .callout h3 { font-size: clamp(22px, 1.5vw + 14px, 30px); }
+  .callout .label { color: var(--muted); }
+  .callout ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: var(--fg); line-height: 1.5; }
+
+  .legend { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; color: var(--muted); }
+  footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 16px; color: var(--dim); }
+
+  @media (min-width: 900px) {
+    .wrap { padding-block: 72px 48px; gap: 40px; }
+    .days { grid-template-columns: 1fr 1fr; gap: 26px; }
+  }
+  @media (max-width: 560px) {
+    .tabs { gap: 8px; }
+    .tab { padding: 10px; }
+    .tab .label:last-child { display: none; }
+    .pr { padding: 10px; }
+    .day-head { grid-template-columns: 40px 1fr; }
+    .day-title { padding: 12px; }
+    .ex { padding: 12px; gap: 4px 10px; }
+  }
+  @media (max-width: 360px) {
+    #theme-label { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tab, .theme-toggle, .reset { transition: none; }
+  }
+</style>
+
+<main class="wrap">
+  <header class="hero">
+    <div class="hero-top">
+      <span class="label">Squat / Bench / Deadlift // 12 Weeks</span>
+      <button class="theme-toggle label" id="theme-toggle" type="button" aria-label="Switch to light mode">
+        <svg viewBox="0 0 16 16" aria-hidden="true"></svg>
+        <span id="theme-label">Light mode</span>
+      </button>
+    </div>
+    <div>
+      <h1>12-Week Strength Plan</h1>
+      <p class="sub">Six training days a week for two months, then four weeks of bench only.</p>
+    </div>
+    <div class="prs" aria-label="Starting personal records">
+      <div class="pr"><span class="label">Squat PR</span><strong>140<small>KG</small></strong></div>
+      <div class="pr"><span class="label">Bench PR</span><strong>100<small>KG</small></strong></div>
+      <div class="pr"><span class="label">Deadlift PR</span><strong>160<small>KG</small></strong></div>
+    </div>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Months" id="tabs"></div>
+
+  <section id="month" aria-live="polite"></section>
+
+  <div class="legend">
+    <span class="label">Sets × reps · % = share of your starting PR</span>
+  </div>
+
+  <footer class="label">
+    <span>Loads in kg</span>
+    <span>Own the weight.</span>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var PR = { squat: 140, bench: 100, deadlift: 160 };
+
+  // [name, scheme, load (kg), lift for %, note]
+  var MONTHS = [
+    { id: 'month-1', name: 'Month 1', weeks: 'Weeks 1–4', desc: 'Moderate loads, higher reps. Build the base.', days: [
+      { title: 'Bench Heavy', lift: 'Bench', ex: [
+        ['Bench Press', '4×5', '80', 'bench'],
+        ['2-Count Pause Bench Press', '3×5', '75', 'bench'],
+        ['Barbell Row', '3×10'],
+        ['Dumbbell Overhead Press', '3×10'],
+        ['Triceps Dips or Close-Grip Pushups', '3×15']
+      ]},
+      { title: 'Deadlift Heavy', lift: 'Deadlift', ex: [
+        ['Deadlifts', '4×6', '112.5–120', 'deadlift'],
+        ['Deficit Deadlifts', '3×8'],
+        ['Romanian Deadlifts', '3×10–12'],
+        ['Barbell Rows', '3×10'],
+        ['Hanging Leg Raises', '3×12']
+      ]},
+      { title: 'Squat Heavy', lift: 'Squat', ex: [
+        ['Squat', '4×5', '105–112.5', 'squat'],
+        ['Pause Squat', '3×3', '97.5', 'squat'],
+        ['Romanian Deadlifts', '3×8–10'],
+        ['Bulgarian Split Squats', '3×10', null, null, 'Each leg'],
+        ['Core', 'Planks, Hanging Leg Raises']
+      ]},
+      { title: 'Bench Volume', lift: 'Bench', ex: [
+        ['Bench Press', '4×8', '65', 'bench'],
+        ['Dumbbell Incline Press', '3×6'],
+        ['Seated Cable Row', '3×12', null, null, 'Or chest-supported row'],
+        ['Chest Fly', '3×15', null, null, 'Machine or cables'],
+        ['Overhead Triceps Extensions', '3×15']
+      ]},
+      { title: 'Deadlift Volume', lift: 'Deadlift', ex: [
+        ['Speed Deadlifts', '6×3', '105', 'deadlift'],
+        ['Front Squats', '3×6–8'],
+        ['Good Mornings', '3×10–12'],
+        ['Seated Cable Rows', '3×12'],
+        ['Plank Holds', '3×45 sec']
+      ]},
+      { title: 'Squat Volume', lift: 'Squat', ex: [
+        ['Squat', '6×3', '90–97.5', 'squat', 'Fast reps'],
+        ['Front Squat', '3×5', '97.5', 'squat'],
+        ['Step-Ups or Lunges', '3×12', null, null, 'Each leg'],
+        ['Hamstring Curls or Glute Ham Raises', '3×12'],
+        ['Core', 'Russian Twists, Ab Rollouts']
+      ]}
+    ]},
+    { id: 'month-2', name: 'Month 2', weeks: 'Weeks 5–8', desc: 'Heavier triples and fives. Squat and deadlift peak in Week 8.', days: [
+      { title: 'Bench Heavy', lift: 'Bench', ex: [
+        ['Bench Press', '5×3', '85–87.5', 'bench'],
+        ['Board Press', '3×5', null, null, 'Or pin press at your sticking point'],
+        ['Weighted Chin-Ups or Pulldowns', '3×8'],
+        ['Standing Overhead Barbell Press', '3×8'],
+        ['Heavy Triceps Pushdowns', '3×12']
+      ]},
+      { title: 'Deadlift Heavy', lift: 'Deadlift', ex: [
+        ['Deadlifts', '5×5', '127.5', 'deadlift'],
+        ['Block Pulls', '4×6'],
+        ['Bulgarian Split Squats', '3×8', null, null, 'Each leg'],
+        ['Weighted Pull-Ups', '3×6–8'],
+        ['Hanging Leg Raises', '3×12']
+      ]},
+      { title: 'Squat Heavy', lift: 'Squat', ex: [
+        ['Squat', '4×3', '120–125', 'squat'],
+        ['Pause Squat', '3×2', '105', 'squat'],
+        ['Romanian Deadlifts', '3×8'],
+        ['Bulgarian Split Squats', '3×10'],
+        ['Core', 'Weighted Planks, Hanging Knee Raises']
+      ]},
+      { title: 'Bench Volume', lift: 'Bench', ex: [
+        ['Bench Press', '6×3', '70', 'bench', 'Focus on bar speed'],
+        ['Dumbbell Flat Press', '3×10'],
+        ['Machine Row or Barbell Row', '3×10'],
+        ['Dumbbell Fly', '3×12–15'],
+        ['Rope Triceps Extensions', '3×20']
+      ]},
+      { title: 'Deadlift Volume', lift: 'Deadlift', ex: [
+        ['Speed Deadlifts', '5×3', '112.5', 'deadlift'],
+        ['Front Squats', '4×5–6'],
+        ['Romanian Deadlifts', '3×8–10'],
+        ['Bent-Over Rows', '3×10–12'],
+        ['Side Planks', '3×40 sec', null, null, 'Each side']
+      ]},
+      { title: 'Squat Volume', lift: 'Squat', ex: [
+        ['Squat', '6×2', '105', 'squat', 'Fast'],
+        ['Front Squat', '3×3', '112.5', 'squat'],
+        ['Step-Ups or Lunges', '3×12'],
+        ['Hamstring Curls or Glute Ham Raises', '3×10'],
+        ['Core', 'Russian Twists, Ab Rollouts']
+      ]}
+    ], callout: { tag: 'Week 8', title: 'Squat & Deadlift Taper + Test', items: [
+      'Reduce volume',
+      'Deadlift: singles @ 145–152.5 kg (91–95%)',
+      'Test new squat and deadlift 1RM at the end of Week 8'
+    ]}},
+    { id: 'month-3', name: 'Month 3', weeks: 'Weeks 9–12', desc: 'Bench only. One heavy day, one light technique day.', days: [
+      { title: 'Bench Heavy', lift: 'Bench', ex: [
+        ['Bench Press', '5×2', '90–92.5', 'bench'],
+        ['Spoto Press', '3×4'],
+        ['Heavy Barbell Rows', '3×8'],
+        ['Dumbbell Shoulder Press', '3×8'],
+        ['Weighted Dips', '3×8–10']
+      ]},
+      { title: 'Bench Light', lift: 'Recovery + Technique', ex: [
+        ['Bench Press', '5×3', '70', 'bench', 'Focus on perfect form'],
+        ['Dumbbell Incline Press', '3×8'],
+        ['Pull-Ups or Pulldown', '3×10'],
+        ['Pec Deck or Cable Fly', '3×12–15'],
+        ['Light Triceps Extensions', '3×20']
+      ]}
+    ], callout: { tag: 'Week 12', title: 'Test New Bench PR', items: [
+      'Test your new bench 1RM (starting PR: 100 kg)'
+    ]}}
+  ];
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function pct(load, lift) {
+    return load.split('–').map(function (n) { return Math.round(parseFloat(n) / PR[lift] * 100); }).join('–') + '%';
+  }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  var tabsEl = document.getElementById('tabs');
+  var monthEl = document.getElementById('month');
+  var current = MONTHS[0].id;
+
+  tabsEl.innerHTML = MONTHS.map(function (m) {
+    return '<button class="tab" role="tab" id="tab-' + m.id + '" data-id="' + m.id + '" aria-controls="month" type="button">' +
+      '<span class="label">' + m.weeks + '</span><b>' + m.name + '</b>' +
+      '<span class="label">' + m.days.length + ' days / week</span></button>';
+  }).join('');
+
+  function render() {
+    var m = MONTHS.filter(function (x) { return x.id === current; })[0];
+    [].forEach.call(tabsEl.children, function (b) { b.setAttribute('aria-selected', b.dataset.id === current ? 'true' : 'false'); });
+
+    var html = '<div class="month-head"><div><span class="label">' + m.weeks + '</span><h2>' + m.name + '</h2><p>' + m.desc + '</p></div></div>';
+    html += '<div class="days" style="margin-top:24px">';
+    m.days.forEach(function (d, di) {
+      var rows = d.ex.map(function (e) {
+        var isText = !/^\d/.test(e[1]);
+        var load = e[2] ? '<span class="load"><span class="chip">' + e[2] + ' kg</span><span class="chip pct">' + pct(e[2], e[3]) + '</span></span>' : '';
+        return '<li class="ex">' +
+          '<span class="name-wrap"><span class="name">' + esc(e[0]) + '</span>' + (e[4] ? '<span class="note">' + esc(e[4]) + '</span>' : '') + '</span>' +
+          '<span class="scheme' + (isText ? ' text' : '') + '">' + esc(e[1]) + '</span>' + load + '</li>';
+      }).join('');
+      html += '<article class="day">' +
+        '<div class="day-head"><span class="day-num">' + pad(di + 1) + '</span>' +
+        '<div class="day-title"><span class="label">' + esc(d.lift) + '</span><h3>' + esc(d.title) + '</h3></div></div>' +
+        '<ul class="ex-list">' + rows + '</ul></article>';
+    });
+    if (m.callout) {
+      html += '<aside class="callout"><span class="label">' + m.callout.tag + '</span><h3>' + esc(m.callout.title) + '</h3><ul>' +
+        m.callout.items.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul></aside>';
+    }
+    html += '</div>';
+    monthEl.innerHTML = html;
+  }
+
+  function fromHash() {
+    var h = location.hash.slice(1);
+    if (MONTHS.some(function (m) { return m.id === h; })) current = h;
+    render();
+  }
+
+  tabsEl.addEventListener('click', function (e) {
+    var b = e.target.closest('.tab');
+    if (!b) return;
+    current = b.dataset.id;
+    try { history.replaceState(null, '', '#' + current); } catch (err) {}
+    render();
+  });
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+
+  // Theme (dark by default)
+  var root = document.documentElement;
+  var btn = document.getElementById('theme-toggle');
+  var label = document.getElementById('theme-label');
+  var icon = btn.querySelector('svg');
+  var moon = '<path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7z"/>';
+  var sun = '<circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M3 13l1.4-1.4M11.6 4.4 13 3"/>';
+  function apply(dark) {
+    root.classList.toggle('dark', dark);
+    label.textContent = dark ? 'Light mode' : 'Dark mode';
+    btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    icon.innerHTML = dark ? sun : moon;
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('wp-theme'); } catch (e) {}
+  apply(saved !== 'light');
+  btn.addEventListener('click', function () {
+    var dark = !root.classList.contains('dark');
+    apply(dark);
+    try { localStorage.setItem('wp-theme', dark ? 'dark' : 'light'); } catch (e) {}
+  });
+})();
+</script>
+
+</body></html>
