@@ -1,3 +1,4 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Vishnu Moguluri Links</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,7 +105,7 @@
     margin: 0;
     font-family: var(--display);
     font-weight: 400;
-    font-size: clamp(38px, 10vw, 60px);
+    font-size: clamp(30px, 6vw + 14px, 72px);
     line-height: 0.95;
     letter-spacing: 0.02em;
     text-transform: uppercase;
@@ -178,10 +179,66 @@
     .hero, .button { animation: none; }
     .button { transition: none; }
   }
+  /* Tablet: a little more room */
+  @media (min-width: 640px) {
+    .wrap { max-width: 600px; padding-block: 64px 40px; gap: 36px; }
+    .hero { padding: 28px 28px 30px; }
+    .mark { width: 76px; height: 76px; font-size: 36px; }
+    .intro { font-size: 16px; }
+  }
+
+  /* Desktop: wider column, links in a 2 x 2 grid */
+  @media (min-width: 960px) {
+    .wrap { max-width: 840px; padding-block: 88px 48px; gap: 40px; }
+    .hero { padding: 36px 40px 38px; box-shadow: 8px 8px 0 var(--shadow); }
+    .mark { width: 92px; height: 92px; font-size: 44px; }
+    .tag { font-size: 16px; }
+    .intro { font-size: 17px; }
+    nav { grid-template-columns: 1fr 1fr; gap: 18px 22px; }
+    .button { min-height: 76px; }
+    .title { font-size: 17px; }
+  }
+
+  /* Large screens */
+  @media (min-width: 1440px) {
+    .wrap { max-width: 920px; padding-block: 120px 56px; }
+  }
+
+  /* Phones */
   @media (max-width: 420px) {
-    .hero { padding: 20px; }
-    .mark { width: 52px; height: 52px; font-size: 24px; }
-    .button { grid-template-columns: 38px 1fr auto; }
+    .wrap { padding-block: 24px 24px; gap: 26px; }
+    .hero { padding: 18px 18px 20px; box-shadow: 4px 4px 0 var(--shadow); }
+    .id { gap: 12px; }
+    .mark { width: 50px; height: 50px; font-size: 22px; }
+    .intro { font-size: 14px; }
+    nav { gap: 12px; }
+    .button { grid-template-columns: 36px 1fr auto; min-height: 60px; padding-right: 12px; }
+    .text { padding: 10px 12px; }
+    .title { font-size: 15px; }
+    .arrow { width: 28px; height: 28px; }
+  }
+
+  /* Very small phones: icon-only theme button */
+  @media (max-width: 360px) {
+    #theme-label { display: none; }
+    .theme-toggle { padding: 7px; }
+    .list-head { flex-wrap: wrap; gap: 6px 12px; }
+  }
+
+  /* Landscape phones: less vertical padding */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .wrap { padding-block: 20px 20px; gap: 22px; }
+  }
+
+  /* Touch screens: no sticky hover state after a tap */
+  @media (hover: none) {
+    .button:hover:not(:focus-visible) {
+      background: var(--row); color: var(--fg); transform: none; box-shadow: 4px 4px 0 var(--shadow);
+    }
+    .button:hover:not(:focus-visible) .number { color: var(--dim); border-color: var(--line); }
+    .button:hover:not(:focus-visible) .handle { color: var(--muted); }
+    .button:hover:not(:focus-visible) .arrow { border-color: var(--line); }
+    .button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--shadow); }
   }
 </style>
 
@@ -263,3 +320,5 @@
     });
   })();
 </script>
+
+</body></html>
